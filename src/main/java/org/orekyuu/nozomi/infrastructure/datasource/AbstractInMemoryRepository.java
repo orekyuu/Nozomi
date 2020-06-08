@@ -1,7 +1,6 @@
 package org.orekyuu.nozomi.infrastructure.datasource;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AbstractInMemoryRepository<ID, T> {
     protected final Map<ID, T> store = new HashMap<>();
