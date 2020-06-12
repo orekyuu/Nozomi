@@ -21,4 +21,8 @@ public class ProjectService {
         repository.create(new Project(id, name));
         publisher.publishEvent(new NewProjectEvent(id));
     }
+
+    public void rename(ProjectId id, String newName) {
+        repository.update(new Project(id, newName));
+    }
 }

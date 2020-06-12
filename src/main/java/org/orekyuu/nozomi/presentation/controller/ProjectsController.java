@@ -1,6 +1,7 @@
 package org.orekyuu.nozomi.presentation.controller;
 
 import org.orekyuu.nozomi.application.service.ProjectService;
+import org.orekyuu.nozomi.domain.project.ProjectId;
 import org.orekyuu.nozomi.domain.project.ProjectRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,12 @@ public class ProjectsController {
     }
 
     @PostMapping
-    void create(@Valid @ModelAttribute ProjectRequest createRequest) {
-        projectService.create(createRequest.projectId(), createRequest.name);
+    void create(@Valid @ModelAttribute ProjectRequest request) {
+        projectService.create(request.projectId(), request.name);
+    }
+
+    @PutMapping("{id}")
+    void update(@PathVariable String id, @Valid @ModelAttribute ProjectRequest request) {
+        projectService.rename(new ProjectId(id), request.name);
     }
 }
