@@ -4,10 +4,9 @@ import org.orekyuu.nozomi.domain.project.ProjectRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/projects")
@@ -20,9 +19,9 @@ public class ProjectsController {
     }
 
     @GetMapping
-    Mono<List<ProjectEntity>> index() {
-        return Flux.fromIterable(projectRepository.findAll())
+    List<ProjectEntity> index() {
+        return projectRepository.findAll().stream()
                 .map(ProjectEntity::new)
-                .collectList();
+                .collect(Collectors.toList());
     }
 }
