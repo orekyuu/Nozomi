@@ -17,11 +17,16 @@ public class ProjectService {
         this.repository = repository;
     }
 
-
-    void create(ProjectId id, String name) {
+    public void create(ProjectId id, String name) {
         repository.create(new Project(id, name));
         publisher.publishEvent(new NewProjectEvent(id));
     }
 
+    public void rename(ProjectId id, String newName) {
+        repository.update(new Project(id, newName));
+    }
 
+    public void delete(ProjectId id) {
+        repository.remove(id);
+    }
 }

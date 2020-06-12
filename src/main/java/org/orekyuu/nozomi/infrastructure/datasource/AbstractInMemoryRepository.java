@@ -18,6 +18,9 @@ public class AbstractInMemoryRepository<ID, T> {
     }
 
     public void update(ID id, T value) {
+        if (!store.containsKey(id)) {
+            throw new InMemoryResourceNotFoundException(Objects.toString(id));
+        }
         store.put(id, value);
     }
 
