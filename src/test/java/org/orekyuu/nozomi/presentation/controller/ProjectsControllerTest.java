@@ -105,4 +105,15 @@ public class ProjectsControllerTest {
         Assertions.assertThat(projectRepository.findAll())
                 .isEmpty();
     }
+
+    @Test
+    void deleteSuccess() throws Exception {
+        projectRepository.create(new Project(new ProjectId("test"), "hoge"));
+
+        client.perform(delete("/api/projects/test"))
+                .andExpect(status().isOk());
+
+        Assertions.assertThat(projectRepository.findAll())
+                .isEmpty();
+    }
 }

@@ -37,4 +37,9 @@ public class ProjectsController {
     void update(@PathVariable String id, @Valid @ModelAttribute ProjectRequest request) {
         projectService.rename(new ProjectId(id), request.name);
     }
+
+    @DeleteMapping("{id}")
+    void delete(@PathVariable String id) {
+        projectService.delete(new ProjectId(id));
+    }
 }

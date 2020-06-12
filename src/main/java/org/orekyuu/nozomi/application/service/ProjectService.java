@@ -25,4 +25,8 @@ public class ProjectService {
     public void rename(ProjectId id, String newName) {
         repository.update(new Project(id, newName));
     }
+
+    public void delete(ProjectId id) {
+        repository.remove(id);
+    }
 }
