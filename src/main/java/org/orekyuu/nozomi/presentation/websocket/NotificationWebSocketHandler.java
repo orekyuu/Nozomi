@@ -14,6 +14,6 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 public class NotificationWebSocketHandler extends AbstractWebSocketHandler {
     @EventListener
     public void onNewProject(NewProjectEvent event) {
-        broadcast(new WebSocketMessage<>(WebSocketMessage.Type.NEW_PROJECT, Map.of("id", event.id().value())));
+        broadcast(new WebSocketMessage<>(WebSocketMessage.Type.PROJECT_CREATED, Map.of("id", event.id().value())));
     }
 }

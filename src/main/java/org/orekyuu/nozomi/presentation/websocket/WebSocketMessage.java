@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class WebSocketMessage<T> {
     enum Type {
-        NEW_PROJECT
+        PROJECT_CREATED
     }
 
     final Type type;

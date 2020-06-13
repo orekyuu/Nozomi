@@ -41,6 +41,6 @@ class NotificationWebSocketHandlerTest {
 
         Assertions.assertThat(future)
                 .succeedsWithin(Duration.ofSeconds(5))
-                .isEqualTo("{\"type\":\"NEW_PROJECT\",\"data\":{\"id\":\"test\"}}");
+                .isEqualTo("{\"type\":\"PROJECT_CREATED\",\"data\":{\"id\":\"test\"}}");
     }
 }
