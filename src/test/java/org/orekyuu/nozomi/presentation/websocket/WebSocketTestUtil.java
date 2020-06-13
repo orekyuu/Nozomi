@@ -1,7 +1,6 @@
 package org.orekyuu.nozomi.presentation.websocket;
 
 import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.client.WebSocketClient;
@@ -24,6 +23,11 @@ public class WebSocketTestUtil {
                 String result;
 
                 @Override
+                public void afterConnectionEstablished(WebSocketSession session) {
+                    onConnect.run();
+                }
+
+                @Override
                 protected void handleTextMessage(WebSocketSession session, TextMessage message) {
                     result = message.getPayload();
                     latch.countDown();
@@ -31,17 +35,7 @@ public class WebSocketTestUtil {
             };
 
             ListenableFuture<WebSocketSession> future = client.doHandshake(handler, uri);
-            future.addCallback(new ListenableFutureCallback<>() {
-                @Override
-                public void onFailure(Throwable ex) {
-                    ex.printStackTrace();
-                }
-
-                @Override
-                public void onSuccess(WebSocketSession result) {
-                    onConnect.run();
-                }
-            });
+            future.completable().join();
             try {
                 boolean await = latch.await(30, TimeUnit.SECONDS);
                 if (!await) {
