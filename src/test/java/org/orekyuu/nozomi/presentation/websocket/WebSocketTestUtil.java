@@ -43,7 +43,7 @@ public class WebSocketTestUtil {
                 }
             });
             try {
-                boolean await = latch.await(5, TimeUnit.SECONDS);
+                boolean await = latch.await(30, TimeUnit.SECONDS);
                 if (!await) {
                     throw new RuntimeException("wait timeout");
                 }

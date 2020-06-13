@@ -34,7 +34,7 @@ class AbstractWebSocketHandlerTest {
     void testWebSocketConnection() {
         CompletableFuture<String> future = WebSocketTestUtil.connectAndWaitFirstMessage(client, "ws://localhost:" + port + "/test");
 
-        assertThat(future).succeedsWithin(Duration.ofSeconds(5)).isEqualTo("count=1");
+        assertThat(future).succeedsWithin(Duration.ofSeconds(30)).isEqualTo("count=1");
     }
 
     @TestConfiguration

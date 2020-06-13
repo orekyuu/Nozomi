@@ -41,7 +41,7 @@ class NotificationWebSocketHandlerTest {
                 () -> publisher.publishEvent(new ProjectEvent(EventType.PROJECT_CREATED, new ProjectId("test"))));
 
         Assertions.assertThat(future)
-                .succeedsWithin(Duration.ofSeconds(5))
+                .succeedsWithin(Duration.ofSeconds(30))
                 .isEqualTo("{\"type\":\"PROJECT_CREATED\",\"data\":{\"id\":\"test\"}}");
     }
 }
