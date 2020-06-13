@@ -1,17 +1,14 @@
 package org.orekyuu.nozomi.presentation.websocket;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import org.orekyuu.nozomi.domain.basic.event.EventType;
 
 public class WebSocketMessage<T> {
-    enum Type {
-        PROJECT_CREATED
-    }
-
-    final Type type;
+    final EventType type;
     final T data;
 
     @JsonCreator
-    public WebSocketMessage(Type type, T data) {
+    public WebSocketMessage(EventType type, T data) {
         this.type = type;
         this.data = data;
     }

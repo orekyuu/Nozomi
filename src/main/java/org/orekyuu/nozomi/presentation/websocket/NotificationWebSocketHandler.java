@@ -1,6 +1,6 @@
 package org.orekyuu.nozomi.presentation.websocket;
 
-import org.orekyuu.nozomi.domain.project.NewProjectEvent;
+import org.orekyuu.nozomi.domain.project.ProjectEvent;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Scope(SCOPE_SINGLETON)
 public class NotificationWebSocketHandler extends AbstractWebSocketHandler {
     @EventListener
-    public void onNewProject(NewProjectEvent event) {
-        broadcast(new WebSocketMessage<>(WebSocketMessage.Type.PROJECT_CREATED, Map.of("id", event.id().value())));
+    public void onProjectEvent(ProjectEvent event) {
+        broadcast(new WebSocketMessage<>(event.event(), Map.of("id", event.id().value())));
     }
 }

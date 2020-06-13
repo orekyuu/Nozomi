@@ -3,7 +3,8 @@ package org.orekyuu.nozomi.presentation.websocket;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.orekyuu.nozomi.domain.project.NewProjectEvent;
+import org.orekyuu.nozomi.domain.basic.event.EventType;
+import org.orekyuu.nozomi.domain.project.ProjectEvent;
 import org.orekyuu.nozomi.domain.project.ProjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,7 +38,7 @@ class NotificationWebSocketHandlerTest {
     @Test
     void testOnNewProject() {
         CompletableFuture<String> future = WebSocketTestUtil.connectAndWaitFirstMessage(client, uri(),
-                () -> publisher.publishEvent(new NewProjectEvent(new ProjectId("test"))));
+                () -> publisher.publishEvent(new ProjectEvent(EventType.PROJECT_CREATED, new ProjectId("test"))));
 
         Assertions.assertThat(future)
                 .succeedsWithin(Duration.ofSeconds(5))

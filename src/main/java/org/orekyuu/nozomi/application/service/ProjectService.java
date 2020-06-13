@@ -1,7 +1,8 @@
 package org.orekyuu.nozomi.application.service;
 
-import org.orekyuu.nozomi.domain.project.NewProjectEvent;
+import org.orekyuu.nozomi.domain.basic.event.EventType;
 import org.orekyuu.nozomi.domain.project.Project;
+import org.orekyuu.nozomi.domain.project.ProjectEvent;
 import org.orekyuu.nozomi.domain.project.ProjectId;
 import org.orekyuu.nozomi.domain.project.ProjectRepository;
 import org.springframework.context.ApplicationEventPublisher;
@@ -19,7 +20,8 @@ public class ProjectService {
 
     public void create(ProjectId id, String name) {
         repository.create(new Project(id, name));
-        publisher.publishEvent(new NewProjectEvent(id));
+
+        publisher.publishEvent(new ProjectEvent(EventType.PROJECT_CREATED, id));
     }
 
     public void rename(ProjectId id, String newName) {
