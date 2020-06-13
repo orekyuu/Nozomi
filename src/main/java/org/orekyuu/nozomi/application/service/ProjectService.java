@@ -26,9 +26,13 @@ public class ProjectService {
 
     public void rename(ProjectId id, String newName) {
         repository.update(new Project(id, newName));
+
+        publisher.publishEvent(new ProjectEvent(EventType.PROJECT_UPDATED, id));
     }
 
     public void delete(ProjectId id) {
         repository.remove(id);
+
+        publisher.publishEvent(new ProjectEvent(EventType.PROJECT_DELETED, id));
     }
 }
