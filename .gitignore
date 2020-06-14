@@ -34,3 +34,7 @@ out/
 ### docker-compose ###
 infra/mysql/db
 infra/mysql/log
+
+### Ruby ###
+.bundle/
+vendor/
