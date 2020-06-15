@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/nozomi_test?rewriteBatchedStatements=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: password
+doma:
+  dialect: mysql
+  naming: snake_lower_case
