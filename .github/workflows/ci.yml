@@ -12,6 +12,11 @@ jobs:
       db:
         image: mysql:8
         ports: ['3306:3306']
+        env:
+          MYSQL_USER: root
+          MYSQL_ROOT_PASSWORD: password
+          LANG: C.UTF-8
+          TZ: Asia/Tokyo
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
