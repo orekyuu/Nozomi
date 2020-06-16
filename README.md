@@ -29,3 +29,14 @@ $ ENV=test bundle exec rake db:migrate
 # Create the migration
 $ bundle exec rake g:migration create_example_table
 ```
+
+## Run migration (Docker)
+```
+# Start bash of ruby container
+$ docker exec -it nozomi_dev-ruby_1 bash
+# Install libraries
+$ bundle install
+
+# Create the database
+# bundle exec rake db:create
+```

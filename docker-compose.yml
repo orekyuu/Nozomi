@@ -9,3 +9,11 @@ services:
       TZ: Asia/Tokyo
     ports:
       - 3306:3306
+  dev-ruby:
+    build:
+      context: ./infra/ruby
+    image: nozomi-dev-ruby:latest
+    environment:
+      MYSQL_HOST: nozomi-mysql
+    volumes:
+      - ./:/working
