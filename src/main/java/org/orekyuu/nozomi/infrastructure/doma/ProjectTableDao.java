@@ -5,9 +5,21 @@ import org.seasar.doma.*;
 import org.seasar.doma.boot.ConfigAutowireable;
 import org.seasar.doma.jdbc.Result;
 
+import java.util.stream.Collector;
+
 @Dao
 @ConfigAutowireable
 public interface ProjectTableDao {
+
+    @Select(strategy = SelectType.COLLECT)
+    @Sql("""
+            select * from projects""")
+    <T> T findAll(Collector<ProjectTable, ?, T> collector);
+
+    @Select(strategy = SelectType.COLLECT)
+    @Sql("""
+            select * from projects where project_id in /*ids*/('id')""")
+    <T> T findByIds(Iterable<ProjectId> ids, Collector<ProjectTable, ?, T> collector);
 
     @Insert
     Result<ProjectTable> insert(ProjectTable projectTable);
