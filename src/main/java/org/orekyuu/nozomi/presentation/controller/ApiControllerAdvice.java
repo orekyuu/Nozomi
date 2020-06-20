@@ -1,7 +1,7 @@
 package org.orekyuu.nozomi.presentation.controller;
 
-import org.orekyuu.nozomi.infrastructure.datasource.InMemoryResourceNotFoundException;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +21,10 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
     }
 
-    @ExceptionHandler({InMemoryResourceNotFoundException.class})
-    protected ResponseEntity<Object> handleInMemoryResourceNotFoundException(Exception ex, WebRequest request) {
-        HttpHeaders headers = new HttpHeaders();
-        return handleExceptionInternal(ex, null, headers, HttpStatus.NOT_FOUND, request);
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    protected ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
+        return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+
     }
 
     @Override
