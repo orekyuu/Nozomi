@@ -1,11 +1,13 @@
 package org.orekyuu.nozomi.presentation.controller;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -17,6 +19,12 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
     public void initBinder(WebDataBinder binder) {
         binder.initDirectFieldAccess();
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    protected ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
+        return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+
     }
 
     @Override

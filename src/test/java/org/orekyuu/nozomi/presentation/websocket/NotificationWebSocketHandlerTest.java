@@ -3,8 +3,14 @@ package org.orekyuu.nozomi.presentation.websocket;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.orekyuu.nozomi.domain.project.ProjectRepository;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,6 +23,7 @@ import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Import(NotificationWebSocketHandlerTest.MockingConfiguration.class)
 class NotificationWebSocketHandlerTest {
 
     @LocalServerPort
@@ -58,5 +65,14 @@ class NotificationWebSocketHandlerTest {
         Assertions.assertThat(future)
                 .succeedsWithin(Duration.ofSeconds(5))
                 .isEqualTo("{\"type\":\"PROJECT_CREATED\",\"data\":{\"id\":\"test\"}}");
+    }
+
+    @TestConfiguration
+    static class MockingConfiguration {
+        @Bean
+        @Primary
+        ProjectRepository projectRepository() {
+            return Mockito.mock(ProjectRepository.class);
+        }
     }
 }
