@@ -2,6 +2,7 @@ package org.orekyuu.nozomi.infrastructure.docker;
 
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientConfig;
+import com.github.dockerjava.core.LocalDirectorySSLConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
@@ -16,12 +17,14 @@ public class DockerClientConfigurationProperty {
     final String registryUrl;
     final String registryUsername;
     final String registryPassword;
+    final String certPath;
 
-    public DockerClientConfigurationProperty(String host, String registryUrl, String registryUsername, String registryPassword) {
+    public DockerClientConfigurationProperty(String host, String registryUrl, String registryUsername, String registryPassword, String certPath) {
         this.host = host;
         this.registryUrl = registryUrl;
         this.registryUsername = registryUsername;
         this.registryPassword = registryPassword;
+        this.certPath = certPath;
     }
 
     public DockerClientConfig build() {
@@ -31,6 +34,10 @@ public class DockerClientConfigurationProperty {
         setIfNotNull(registryUsername, builder::withRegistryUsername);
         setIfNotNull(registryPassword, builder::withRegistryPassword);
         setIfNotNull(registryPassword, builder::withRegistryPassword);
+
+        if (certPath != null) {
+            builder.withCustomSslConfig(new LocalDirectorySSLConfig(certPath));
+        }
         return builder.build();
     }
 

@@ -17,3 +17,10 @@ services:
       MYSQL_HOST: nozomi-mysql
     volumes:
       - ./:/working
+  dev-docker:
+    image: docker:dind
+    privileged: true
+    ports:
+      - 2376:2376
+    volumes:
+      - ./infra/docker/cert:/certs/client
