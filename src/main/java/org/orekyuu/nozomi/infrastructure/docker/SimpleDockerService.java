@@ -49,6 +49,8 @@ public class SimpleDockerService implements DockerService {
         PublishSubject<String> subject = PublishSubject.create();
         executor.execute(() -> {
             try {
+                client().pullImageCmd(task.image()).withTag(task.tag()).start().awaitCompletion();
+
                 CreateContainerCmd containerCmd = client().createContainerCmd(task.image() + ":" + task.tag());
                 List<String> environmentVariables = task.env().stream().flatMap(it -> Stream.of(it.name(), it.value())).collect(Collectors.toList());
                 containerCmd.withEnv(environmentVariables);
