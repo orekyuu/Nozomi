@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.github.docker-java:docker-java-core:3.2.3'
     implementation 'com.github.docker-java:docker-java-transport-httpclient5:+'
 
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
