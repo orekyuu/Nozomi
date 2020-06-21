@@ -41,3 +41,5 @@ jobs:
           bundle exec rake db:migrate
       - name: Run test task
         run: ./gradlew test
+        env:
+          DOCKER_CLIENT_HOST: unix:///var/run/docker.sock
