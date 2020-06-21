@@ -17,6 +17,11 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           LANG: C.UTF-8
           TZ: Asia/Tokyo
+      dind:
+        image: docker:dind
+        ports: ['2376:2376']
+        volumes:
+          - docker_cert:/certs/client
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
@@ -36,8 +41,11 @@ jobs:
       - name: Migrate the database
         env:
           ENV: test
+          DOCKER_CLIENT_CERTPATH: docker_cert
         run: |
           bundle exec rake db:create
           bundle exec rake db:migrate
       - name: Run test task
         run: ./gradlew test
+        env:
+          DOCKER_CLIENT_HOST: unix:///var/run/docker.sock
