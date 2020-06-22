@@ -35,7 +35,3 @@ out/
 infra/mysql/db
 infra/mysql/log
 infra/docker/cert
-
-### Ruby ###
-.bundle/
-vendor/

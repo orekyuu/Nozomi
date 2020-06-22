@@ -40,6 +40,6 @@ end
       EOF
     end
     puts "Migration #{path} created"
-    abort # needed stop other tasks
+    exit 0 # needed stop other tasks
   end
 end

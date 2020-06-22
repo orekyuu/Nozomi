@@ -67,11 +67,11 @@ dependencies {
 
 
 task rake( type : JRubyExec ) {
-    def param = findProperty('param')
+    String param = findProperty('param')
     if(param == null) {
         return
     }
     jrubyArgs '-S'
     script 'rake'
-    scriptArgs 'Rakefile', param
+    scriptArgs param.split(' ')
 }
