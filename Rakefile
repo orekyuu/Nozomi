@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'active_record'
+require 'activerecord-jdbc-adapter' if defined? JRUBY_VERSION
 require 'erb'
 
 include ActiveRecord::Tasks
