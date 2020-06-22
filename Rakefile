@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'active_record'
+require 'activerecord-jdbc-adapter' if defined? JRUBY_VERSION
 require 'erb'
 
 include ActiveRecord::Tasks
@@ -39,6 +40,6 @@ end
       EOF
     end
     puts "Migration #{path} created"
-    abort # needed stop other tasks
+    exit 0 # needed stop other tasks
   end
 end

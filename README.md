@@ -13,30 +13,16 @@ $ docker-compose up
 
 ## Run migration
 ```
-# Install libraries
-$ bundle install --path vendor/bundle
-
 # Create the database
-$ bundle exec rake db:create
+$ gradlew rake -Pparam=db:create
 # Create the test database
-$ ENV=test bundle exec rake db:create
+$ ENV=test gradlew rake -Pparam=db:create
 
 # Migrate the database
-$ bundle exec rake db:migrate
+$ gradlew rake -Pparam=db:migrate
 # Migrate the test database
-$ ENV=test bundle exec rake db:migrate
+$ ENV=test gradlew rake -Pparam=db:migrate
 
 # Create the migration
-$ bundle exec rake g:migration create_example_table
-```
-
-## Run migration (Docker)
-```
-# Start bash of ruby container
-$ docker exec -it nozomi_dev-ruby_1 bash
-# Install libraries
-$ bundle install
-
-# Create the database
-# bundle exec rake db:create
+$ gradlew rake -Pparam="g:migration create_example_table"
 ```
