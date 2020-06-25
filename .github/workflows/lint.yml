@@ -1,0 +1,17 @@
+name: Lint
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Run yarn install
+        run: yarn install
+      - name: Run lint task
+        run: yarn lint --no-fix
