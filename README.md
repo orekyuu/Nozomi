@@ -11,6 +11,12 @@ Deployment tools for WebApplication.
 $ docker-compose up
 ```
 
+## Start frontend dev server
+```
+$ yarn install
+$ yarn serve
+```
+
 ## Run migration
 ```
 # Create the database
