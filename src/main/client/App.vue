@@ -1,10 +1,7 @@
 <template>
-  <div>
-    <div>
-      <router-link to="/">Home</router-link>
-      |
-      <router-link to="/about">About</router-link>
-    </div>
+  <div
+    class="w-full h-full flex flex-row bg-gray-100 text-gray-900 leading-normal"
+  >
     <router-view />
   </div>
 </template>
