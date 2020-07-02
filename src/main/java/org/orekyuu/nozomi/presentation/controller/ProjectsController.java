@@ -29,12 +29,12 @@ public class ProjectsController {
     }
 
     @PostMapping
-    void create(@Valid @ModelAttribute ProjectRequest request) {
+    void create(@Valid @RequestBody ProjectRequest request) {
         projectService.create(request.projectId(), request.name);
     }
 
     @PutMapping("{id}")
-    void update(@PathVariable String id, @Valid @ModelAttribute ProjectRequest request) {
+    void update(@PathVariable String id, @Valid @RequestBody ProjectRequest request) {
         projectService.rename(new ProjectId(id), request.name);
     }
 
