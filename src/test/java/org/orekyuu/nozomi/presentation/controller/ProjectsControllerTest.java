@@ -1,5 +1,7 @@
 package org.orekyuu.nozomi.presentation.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -10,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.mockito.Mockito.doReturn;
@@ -28,6 +32,19 @@ public class ProjectsControllerTest {
     MockMvc client;
     @SpyBean
     ProjectRepository projectRepository;
+    @Autowired
+    ObjectMapper mapper;
+
+    String requestBody(String id, String name) throws JsonProcessingException {
+        HashMap<String, Object> json = new HashMap<>();
+        if (id != null) {
+            json.put("id", id);
+        }
+        if (name != null) {
+            json.put("name", name);
+        }
+        return mapper.writeValueAsString(json);
+    }
 
     @Test
     void index() throws Exception {
@@ -43,8 +60,8 @@ public class ProjectsControllerTest {
     @Test
     void createSuccess() throws Exception {
         client.perform(post("/api/projects")
-                .param("id", "test_id")
-                .param("name", "hoge")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody("test_id", "hoge"))
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
@@ -56,8 +73,8 @@ public class ProjectsControllerTest {
     @Test
     void createValidationError() throws Exception {
         client.perform(post("/api/projects")
-                .param("id", "test_id")
-                .param("name", "")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody("test_id", ""))
         )
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(Matchers.containsString("must not be blank")));
@@ -71,7 +88,8 @@ public class ProjectsControllerTest {
         projectRepository.create(new Project(new ProjectId("test"), "New Project"));
 
         client.perform(put("/api/projects/test")
-                .param("name", "Renamed Project")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody(null, "Renamed Project"))
         )
                 .andExpect(status().isOk());
 
@@ -87,7 +105,8 @@ public class ProjectsControllerTest {
         projectRepository.create(new Project(new ProjectId("test"), "New Project"));
 
         client.perform(put("/api/projects/test")
-                .param("name", "")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody(null, ""))
         )
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(Matchers.containsString("must not be blank")));
@@ -101,7 +120,10 @@ public class ProjectsControllerTest {
 
     @Test
     void updateNotFound() throws Exception {
-        client.perform(put("/api/projects/test").param("name", "test"))
+        client.perform(put("/api/projects/test")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody(null, "test"))
+        )
                 .andExpect(status().isNotFound());
 
         Assertions.assertThat(projectRepository.findAll())
