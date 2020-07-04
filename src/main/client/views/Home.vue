@@ -11,7 +11,7 @@
             class="flex items-center m-1 p-1 hover:bg-gray-400 text-base text-gray-800 cursor-pointer antialiased"
           >
             <img
-              :src="p.icon"
+              src="https://pbs.twimg.com/profile_images/1117404785399877632/enfsr__r_400x400.png"
               class="object-cover w-8 mr-3 rounded-full overflow-hidden"
             />
             {{ p.name }}
@@ -27,7 +27,7 @@
             class="flex items-center m-1 p-1 hover:bg-gray-400 text-base text-gray-800 cursor-pointer"
           >
             <img
-              :src="p.icon"
+              src="https://pbs.twimg.com/profile_images/1117404785399877632/enfsr__r_400x400.png"
               class="object-cover w-8 mr-3 rounded-full overflow-hidden"
             />
             {{ p.name }}
@@ -45,32 +45,25 @@
 <script>
 import HelloDeployment from "@/components/HelloDeployment"
 import DeploymentView from "@/components/DeploymentView"
+import { mapActions, mapGetters } from "vuex"
+
 export default {
   name: "Home",
   components: { DeploymentView, HelloDeployment },
-  data() {
-    return {
-      projects: [
-        {
-          name: "Deploy Manager",
-          icon:
-            "https://pbs.twimg.com/profile_images/1117404785399877632/enfsr__r_400x400.png"
-        },
-        {
-          name: "Project 1",
-          icon:
-            "https://pbs.twimg.com/profile_images/1117404785399877632/enfsr__r_400x400.png"
-        }
-      ]
-    }
-  },
   computed: {
     selected() {
       if (this.projects.length == 0) {
         return null
       }
       return this.projects[0]
-    }
+    },
+    ...mapGetters("deployment", ["projects"])
+  },
+  methods: {
+    ...mapActions("deployment", ["loadProjects"])
+  },
+  mounted() {
+    this.loadProjects()
   }
 }
 </script>
